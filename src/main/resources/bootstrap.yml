@@ -1,0 +1,60 @@
+spring:
+  cloud:
+    nacos:
+      discovery:
+        server-addr: http://dctestnacos.huakun.com:8848
+        group: datacenter
+      config:
+        server-addr: http://dctestnacos.huakun.com:8848
+        group: datacenter
+        file-extension: yaml
+---
+spring:
+  profiles: dev
+  cloud:
+    nacos:
+      discovery:
+        namespace: 5b19de24-d3e2-47f4-9326-69eb42ab3d00
+      config:
+        namespace: 5b19de24-d3e2-47f4-9326-69eb42ab3d00
+
+---
+spring:
+  profiles: test
+  cloud:
+    nacos:
+      discovery:
+        server-addr: http://dctestnacos.huakun.com:8848
+      config:
+        server-addr: http://dctestnacos.huakun.com:8848
+---
+spring:
+  profiles: prod
+  cloud:
+    nacos:
+      discovery:
+        server-addr: http://dcprodnacos1.huakun.com:8848,http://dcprodnacos2.huakun.com:8848,http://dcprodnacos3.huakun.com:8848
+      config:
+        server-addr: http://dcprodnacos1.huakun.com:8848
+
+---
+spring:
+  profiles: tencent-test
+  cloud:
+    nacos:
+      discovery:
+        server-addr: http://dctestnacos.huakun.com:8848
+        namespace: 59788a43-2b81-479f-9f77-52de496ae6bc
+      config:
+        server-addr: http://dctestnacos.huakun.com:8848
+        namespace: 59788a43-2b81-479f-9f77-52de496ae6bc
+
+---
+spring:
+  profiles: tencent
+  cloud:
+    nacos:
+      discovery:
+        server-addr: http://172.16.16.33:8848
+      config:
+        server-addr: http://172.16.16.33:8848

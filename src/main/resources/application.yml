@@ -1,0 +1,62 @@
+spring:
+  application:
+    name: gateway
+  cloud:
+    gateway:
+      discovery:
+        locator:
+          enabled: true
+          lower-case-service-id: true
+      routes:
+        - id: oauth-route
+          uri: lb://auth-server
+          predicates:
+            Path=/oauth/**
+        - id: com-login
+          uri: lb://auth-server
+          predicates:
+            Path=/uaa/login
+          filters:
+            - AddRequestParameter=client_id,${oauth.client_id}
+            - AddRequestParameter=client_secret,${oauth.client_secret}
+            - AddRequestParameter=grant_type,password
+            - RewritePath=/uaa/.*, /oauth/token
+management:
+  endpoint:
+    info:
+      enabled: true
+    health:
+      enabled: true
+      show-details: always
+    env:
+      enabled: true
+    logfile:
+      enabled: true
+    loggers:
+      enabled: true
+    mappings:
+      enabled: true
+    configprops:
+      enabled: true
+    scheduledtasks:
+      enabled: true
+    metrics:
+      enabled: true
+    gateway:
+      enabled: true
+  endpoints:
+    enabled-by-default: false
+    web:
+      exposure:
+        include: "*"
+oauth:
+  client_id: com_client
+  client_secret: hhxxttxs
+# 不进行访问控制路由
+resource:
+  exclude-resource-service-list:
+    - gateway
+    - callback
+logging:
+  file:
+    name:  /logs/application/gateway.log
